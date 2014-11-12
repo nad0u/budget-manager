@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  #override default layout by the fixed bootstrap
+  layout "fixed"
 
   # GET /users
   # GET /users.json

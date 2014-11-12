@@ -1,29 +1,59 @@
-<%= form_for(@budget) do |f| %>
-  <% if @budget.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@budget.errors.count, "error") %> prohibited this budget from being saved:</h2>
+<%= form_for @budget, :html => { :class => "form-horizontal budget" } do |f| %>
 
-      <ul>
-      <% @budget.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <% if @budget.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@budget.errors.count, "error") %> prohibited this budget from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @budget.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@budget[:name]) %>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :description, :class => 'form-control' %>
+    </div>
+    <%= error_span(@budget[:description]) %>
   </div>
-  <div class="field">
-    <%= f.label :is_expense %><br>
-    <%= f.check_box :is_expense %>
+  <div class="control-group">
+    <%= f.label :is_expense, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :is_expense, :class => 'form-control' %>
+    </div>
+    <%= error_span(@budget[:is_expense]) %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="control-group">
+    <%= f.label :category_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :category_id, :class => 'form-control' %>
+    </div>
+    <%= error_span(@budget[:category_id]) %>
   </div>
+  <div class="control-group">
+    <%= f.label :user_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :user_id, :class => 'form-control' %>
+    </div>
+    <%= error_span(@budget[:user_id]) %>
+  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            budgets_path, :class => 'btn btn-default' %>
+
 <% end %>

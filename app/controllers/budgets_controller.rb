@@ -1,5 +1,7 @@
 class BudgetsController < ApplicationController
   before_action :set_budget, only: [:show, :edit, :update, :destroy]
+  #override default layout by the fixed bootstrap
+  layout "fixed"
 
   # GET /budgets
   # GET /budgets.json

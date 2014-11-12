@@ -1,4 +1,4 @@
-class WelcomeController < ApplicationController
+class AboutController < ApplicationController
     #override default layout by the fixed bootstrap
     layout "fixed"
 

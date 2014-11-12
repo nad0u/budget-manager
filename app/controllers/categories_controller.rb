@@ -1,5 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
+  #override default layout by the fixed bootstrap
+  layout "fixed"
 
   # GET /categories
   # GET /categories.json
