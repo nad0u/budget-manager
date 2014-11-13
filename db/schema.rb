@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112100728) do
+ActiveRecord::Schema.define(version: 20141113085057) do
 
   create_table "budgets", force: true do |t|
     t.string   "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20141112100728) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "amount",      limit: 24
   end
 
   add_index "budgets", ["category_id"], name: "index_budgets_on_category_id", using: :btree
