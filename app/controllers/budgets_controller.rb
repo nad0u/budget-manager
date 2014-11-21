@@ -17,10 +17,14 @@ class BudgetsController < ApplicationController
   # GET /budgets/new
   def new
     @budget = Budget.new
+    @categories = Category.all
+    @users = User.all
   end
 
   # GET /budgets/1/edit
   def edit
+      @categories = Category.all
+      @users = User.all
   end
 
   # POST /budgets
@@ -42,6 +46,8 @@ class BudgetsController < ApplicationController
   # PATCH/PUT /budgets/1
   # PATCH/PUT /budgets/1.json
   def update
+    @categories = Category.all
+    @users = User.all
     respond_to do |format|
       if @budget.update(budget_params)
         format.html { redirect_to @budget, notice: 'Budget was successfully updated.' }
@@ -71,6 +77,6 @@ class BudgetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def budget_params
-      params.require(:budget).permit(:name, :description, :is_expense)
+      params.require(:budget).permit(:name, :description, :is_expense, :user_id, :category_id, :amount)
     end
 end

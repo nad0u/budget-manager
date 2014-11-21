@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141113085057) do
+ActiveRecord::Schema.define(version: 20141121124748) do
 
   create_table "budgets", force: true do |t|
     t.string   "name"
@@ -42,6 +42,10 @@ ActiveRecord::Schema.define(version: 20141113085057) do
     t.boolean  "is_blocked"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_admin",   default: false
   end
+
+  add_foreign_key "budgets", "categories", name: "budgets_category_id_fk"
+  add_foreign_key "budgets", "users", name: "budgets_user_id_fk"
 
 end

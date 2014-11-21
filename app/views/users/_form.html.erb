@@ -1,45 +1,72 @@
-<%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<%= form_for @user, :html => { :class => "form-horizontal user" } do |f| %>
 
-      <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<% if @user.errors.any? %>
+<div id="error_expl" class="panel panel-danger">
+    <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h3>
     </div>
-  <% end %>
+    <div class="panel-body">
+        <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+            <% end %>
+        </ul>
+    </div>
+</div>
+<% end %>
 
-  <div class="field">
-    <%= f.label :uname %><br>
-    <%= f.text_field :uname %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :passw %><br>
-    <%= f.text_field :passw %>
-  </div>
-  <div class="field">
-    <%= f.label :is_active %><br>
-    <%= f.check_box :is_active %>
-  </div>
-  <div class="field">
-    <%= f.label :is_blocked %><br>
-    <%= f.check_box :is_blocked %>
-  </div>
-  <div class="field">
-    <%= f.label :created_at %><br>
-    <%= f.datetime_select :created_at %>
-  </div>
-  <div class="field">
-    <%= f.label :updated_at %><br>
-    <%= f.datetime_select :updated_at %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<div class="control-group">
+    <%= f.label :uname, :class => 'control-label' %>
+    <div class="controls">
+        <%= f.text_field :uname, :class => 'form-control' %>
+    </div>
+    <%= error_span(@user[:uname]) %>
+</div>
+<div class="control-group">
+    <%= f.label :email, :class => 'control-label' %>
+    <div class="controls">
+        <%= f.text_field :email, :class => 'form-control' %>
+    </div>
+    <%= error_span(@user[:email]) %>
+</div>
+<div class="control-group">
+    <%= f.label :passw, :class => 'control-label' %>
+    <div class="controls">
+        <%= f.password_field :passw, :class => 'form-control' %>
+    </div>
+    <%= error_span(@user[:passw]) %>
+</div>
+<div class="control-group">
+    <%= f.label :passw_confirmation, :class => 'control-label' %>
+    <div class="controls">
+        <%= f.password_field :passw_confirmation, :class => 'form-control' %>
+    </div>
+    <%= error_span(@user[:passw_confirmation]) %>
+</div>
+<div class="control-group">
+    <%= f.label :is_active, :class => 'control-label' %>
+    <div class="controls">
+        <%= f.check_box :is_active, :class => 'form-control' %>
+    </div>
+    <%= error_span(@user[:is_active]) %>
+</div>
+<div class="control-group">
+    <%= f.label :is_blocked, :class => 'control-label' %>
+    <div class="controls">
+        <%= f.check_box :is_blocked, :class => 'form-control' %>
+    </div>
+    <%= error_span(@user[:is_blocked]) %>
+</div>
+<div class="control-group">
+    <%= f.label :is_admin, :class => 'control-label' %>
+    <div class="controls">
+        <%= f.check_box :is_admin, :class => 'form-control' %>
+    </div>
+    <%= error_span(@user[:is_admin]) %>
+</div>
+
+<%= f.submit nil, :class => 'btn btn-primary' %>
+<%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+users_path, :class => 'btn btn-default' %>
+
 <% end %>

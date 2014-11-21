@@ -5,12 +5,11 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:description) %></th>
       <th><%= model_class.human_attribute_name(:is_expense) %></th>
       <th><%= model_class.human_attribute_name(:category_id) %></th>
-      <th><%= model_class.human_attribute_name(:user_id) %></th>
+      <th><%= model_class.human_attribute_name(:amount) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -18,13 +17,18 @@
   <tbody>
     <% @budgets.each do |budget| %>
       <tr>
-        <td><%= link_to budget.id, budget_path(budget) %></td>
-        <td><%= budget.name %></td>
+        <td><%= link_to budget.name, budget_path(budget) %></td>
         <td><%= budget.description %></td>
         <td><%= budget.is_expense %></td>
-        <td><%= budget.category_id %></td>
-        <td><%= budget.user_id %></td>
-        <td><%=l budget.created_at %></td>
+        <td><%=
+            if budget.category_id.nil?
+                "-"
+            else
+                budget.category.name
+            end
+         %></td>
+        <td><%= number_with_precision( budget.amount, precision: 2, separator: '.', delimiter: '\'') %></td>
+        <td><%= budget.created_at.strftime("%d.%m.%Y") %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_budget_path(budget), :class => 'btn btn-default btn-xs' %>

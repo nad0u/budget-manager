@@ -10,10 +10,18 @@
   <dd><%= @budget.description %></dd>
   <dt><strong><%= model_class.human_attribute_name(:is_expense) %>:</strong></dt>
   <dd><%= @budget.is_expense %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:amount) %>:</strong></dt>
+  <dd><%= number_with_precision( @budget.amount, precision: 2, separator: '.', delimiter: '\'') %></dd>
   <dt><strong><%= model_class.human_attribute_name(:category_id) %>:</strong></dt>
-  <dd><%= @budget.category_id %></dd>
+  <dd><%=
+        if @budget.category_id.nil?
+            "-"
+        else
+            @budget.category.name
+        end
+    %></dd>
   <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
-  <dd><%= @budget.user_id %></dd>
+  <dd><%= @budget.user.uname %></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
