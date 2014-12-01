@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   get "/log-in" => "sessions#new"
   post "/log-in" => "sessions#create"
   get "/log-out" => "sessions#destroy", as: :log_out
+  get "account_settings" => "users#account_settings"
+  put "account_settings" => "users#update"
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

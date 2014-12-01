@@ -64,6 +64,7 @@ class UsersController < ApplicationController
     end
   end
 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -74,5 +75,9 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:username, :email, :password, :password_confirmation, :is_admin, :is_active, :is_blocked)
     end
+
+  def account_settings
+    @user = current_user
+  end
 
 end
