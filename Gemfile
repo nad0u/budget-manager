@@ -45,3 +45,6 @@ gem "twitter-bootstrap-rails"
 
 #For adding foreign key constraints at db level
 gem 'foreigner'
+
+#encryption gem 
+gem 'bcrypt-ruby', '~> 3.1.5', require: "bcrypt"

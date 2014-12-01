@@ -35,14 +35,15 @@ ActiveRecord::Schema.define(version: 20141121124748) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "uname"
+    t.string   "username"
     t.string   "email"
-    t.string   "passw"
+    t.string   "password_hash"
+    t.string   "password_salt"
     t.boolean  "is_active"
     t.boolean  "is_blocked"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_admin",   default: false
+    t.boolean  "is_admin",      default: false
   end
 
   add_foreign_key "budgets", "categories", name: "budgets_category_id_fk"

@@ -48,7 +48,7 @@
   <div class="control-group">
     <%= f.label :user_id, :class => 'control-label' %>
     <div class="controls">
-      <%= f.collection_select(:user_id, @users, :id, :uname, :include_blank => "Please select") %>
+      <%= f.collection_select(:user_id, @users, :id, :username, :include_blank => "Please select") %>
     </div>
     <%= error_span(@budget[:user_id]) %>
   </div>

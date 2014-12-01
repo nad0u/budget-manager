@@ -1,18 +1,18 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  uname: MyString
+  username: MyString
   email: MyString
-  passw: MyString
+  password: MyString
   is_active: false
   is_blocked: false
   created_at: 2014-11-12 08:28:35
   updated_at: 2014-11-12 08:28:35
 
 two:
-  uname: MyString
+  username: MyString
   email: MyString
-  passw: MyString
+  password: MyString
   is_active: false
   is_blocked: false
   created_at: 2014-11-12 08:28:35

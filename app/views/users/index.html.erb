@@ -6,7 +6,7 @@
     <thead>
         <tr>
             <th><%= model_class.human_attribute_name(:id) %></th>
-            <th><%= model_class.human_attribute_name(:uname) %></th>
+            <th><%= model_class.human_attribute_name(:username) %></th>
             <th><%= model_class.human_attribute_name(:is_active) %></th>
             <th><%= model_class.human_attribute_name(:is_blocked) %></th>
             <th><%= model_class.human_attribute_name(:created_at) %></th>
@@ -18,7 +18,7 @@
         <% @users.each do |user| %>
         <tr>
             <td><%= link_to user.id %></td>
-            <td><%= link_to user.uname, user_path(user) %></td>
+            <td><%= link_to user.username, user_path(user) %></td>
             <td><%= user.is_active %></td>
             <td><%= user.is_blocked %></td>
             <td><%= user.created_at %></td>

@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+
+  #get 'sessions/new'
+
+  #get 'sessions/create'
+
+  #get 'sessions/destroy'
+
   resources :budgets
 
   resources :categories
@@ -12,7 +19,9 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
-
+  get "/log-in" => "sessions#new"
+  post "/log-in" => "sessions#create"
+  get "/log-out" => "sessions#destroy", as: :log_out
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
