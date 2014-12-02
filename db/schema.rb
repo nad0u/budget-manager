@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141121124748) do
+ActiveRecord::Schema.define(version: 20141202082605) do
 
   create_table "budgets", force: true do |t|
     t.string   "name"
@@ -38,12 +38,12 @@ ActiveRecord::Schema.define(version: 20141121124748) do
     t.string   "username"
     t.string   "email"
     t.string   "password_hash"
-    t.string   "password_salt"
     t.boolean  "is_active"
     t.boolean  "is_blocked"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_admin",      default: false
+    t.string   "password_salt"
   end
 
   add_foreign_key "budgets", "categories", name: "budgets_category_id_fk"
