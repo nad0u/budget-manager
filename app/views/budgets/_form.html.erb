@@ -44,20 +44,20 @@
     <%= error_span(@budget[:category_id]) %>
   </div>
 
-  <!-- TODO: retrieve the user_id when user is logged !-->
-  <div class="control-group">
-    <%= f.label :user_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.collection_select(:user_id, @users, :id, :username, :include_blank => "Please select") %>
-    </div>
-    <%= error_span(@budget[:user_id]) %>
-  </div>
   <div class="control-group">
       <%= f.label :amount, :class => 'control-label' %>
       <div class="controls">
           <%= f.text_field :amount, :class => 'form-control' %>
       </div>
       <%= error_span(@budget[:amount]) %>
+  </div>
+
+  <div class="control-group">
+      <%= f.label :date_of_budget, :class => 'control-label' %>
+      <div class="controls">
+          <%= f.date_field :date_of_budget, :class => 'form-control' %>
+      </div>
+      <%= error_span(@budget[:date_of_budget]) %>
   </div>
 
 
