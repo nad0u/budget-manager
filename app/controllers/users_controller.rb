@@ -74,5 +74,13 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:username, :email, :password, :password_confirmation, :is_admin, :is_active, :is_blocked)
     end
+    
+	def index
 
+    end
+
+    def login
+    @user = User.koala(request.env['omniauth.auth']['credentials'])
+    end
+	
 end
