@@ -1,5 +1,6 @@
 
 <%- model_class = Budget -%>
+
 <head>
   <script src="app/assets/javascripts/chartkick.js"></script>
   <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
@@ -53,3 +54,4 @@
             :class => 'btn btn-primary' %>
 
 <%= pie_chart Budget.group(:category_id).count%>
+<%= column_chart Budget.group(:created_at).count %>
