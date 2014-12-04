@@ -1,4 +1,9 @@
+
 <%- model_class = Budget -%>
+<head>
+  <script src="app/assets/javascripts/chartkick.js"></script>
+  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+</head>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
@@ -46,3 +51,5 @@
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_budget_path,
             :class => 'btn btn-primary' %>
+
+<%= pie_chart Budget.group(:category_id).count%>

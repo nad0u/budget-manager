@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'charts/completed_tasks'
+
+  get 'chart/index'
+
   #get 'sessions/new'
 
   #get 'sessions/create'

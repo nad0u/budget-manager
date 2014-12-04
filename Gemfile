@@ -48,3 +48,10 @@ gem 'foreigner'
 
 #encryption gem 
 gem 'bcrypt-ruby', '~> 3.1.5', require: "bcrypt"
+
+#google chart
+gem 'gchartrb', '~> 0.8'
+
+#chartkick
+gem 'groupdate'
+gem "chartkick"
