@@ -1,10 +1,6 @@
 
 <%- model_class = Budget -%>
 
-<head>
-  <script src="app/assets/javascripts/chartkick.js"></script>
-  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-</head>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
@@ -53,5 +49,12 @@
             new_budget_path,
             :class => 'btn btn-primary' %>
 
-<%= pie_chart Budget.group(:category_id).count%>
-<%= column_chart Budget.group(:created_at).count %>
+<%= pie_chart current_user.budgets.joins(:category).where('extract(month from date_of_budget) = ?', 12).group(:is_expense).sum(:amount), library: { pieSliceText: 'value' } %>
+<%= column_chart current_user.budgets.joins(:category).where('extract(month from date_of_budget) = ?', 12).group("is_expense, categories.name").sum(:amount), library: { pieSliceText: 'value' } %>
+
+
+<%= pie_chart Budget.where('extract(month from date_of_budget) = ?', 10).group(:category_id).count %>
+<%= bar_chart Budget.where('extract(month from date_of_budget) = ?', 10).group(:is_expense).sum(:amount) %>
+
+<%= pie_chart Budget.group(:category_id).count %>
+<%= column_chart Budget.group(:date_of_budget).count %>
