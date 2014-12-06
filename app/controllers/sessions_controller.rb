@@ -2,6 +2,10 @@ class SessionsController < ApplicationController
     layout "fixed"
 
     def new
+        if logged_in?
+            flash[:warning] = "You're already logged in."
+            redirect_to "/budgets"
+        end
     end
 
 
@@ -15,7 +19,7 @@ class SessionsController < ApplicationController
             #THIS IS THE MOST IMPORTANT PART. Actually log the user in by storing their ID in the session hash with the [:user_id] key!
             session[:user_id] = @user.id
             #then redirect them to the homepage
-            redirect_to "/"
+            redirect_to "/budgets"
         else
             #whoops, either the user wasn't in the database or their password is incorrect, so let them know, then redirect them back to the log in page
             flash[:alert] = "There was a problem logging you in."

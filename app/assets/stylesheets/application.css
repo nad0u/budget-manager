@@ -10,9 +10,19 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
 
- *= require_tree .
+
  *= require_self
+ *= require bootstrap_and_overrides
+ *= require_tree .
  */
+
+
+/*Fix Glyphicons paths*/
+@font-face {
+     font-family: 'Glyphicons Halflings';
+     src: url('/assets/glyphicons-halflings-regular.eot');
+     src: url('/assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/assets/glyphicons-halflings-regular.woff') format('woff'), url('/assets/glyphicons-halflings-regular.ttf') format('truetype'), url('/assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+ }
 
 .nav a {
     color: #cc0000;
@@ -24,7 +34,9 @@
     margin-top: 15px;
 }
 
+/*
 .navbar-inverse {
     background-color: #89c140;
     border-color: #89c140;
 }
+*/
