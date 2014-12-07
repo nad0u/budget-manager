@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141206144601) do
+ActiveRecord::Schema.define(version: 20141206222119) do
 
   create_table "budgets", force: true do |t|
     t.string   "name"
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 20141206144601) do
     t.string   "email"
     t.string   "password_hash"
     t.boolean  "is_active"
-    t.boolean  "is_blocked"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_admin",      default: false

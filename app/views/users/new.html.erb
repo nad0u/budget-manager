@@ -1,5 +1,9 @@
 <%- model_class = User -%>
 <div class="page-header">
+    <% if logged_in? %>
     <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h1>
+    <% else %>
+    <h1>Create your account now</h1>
+    <% end %>
 </div>
 <%= render :partial => 'form' %>

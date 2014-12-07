@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
     before_save { self.email = email.downcase }
     has_many :budgets, dependent: :destroy
-    validates :username, :password_confirmation, presence: true, length: { maximum: 25 }
+    validates :username, presence: true, length: { maximum: 25 }
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
     validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
 

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :require_login, only: [:index, :show, :new, :edit, :create, :update, :destroy]
+    before_action :require_login, only: [:index, :show, :edit, :update, :destroy]
     before_action :check_authorization, only: [:index]
     before_action :set_user, only: [:show, :edit, :update, :destroy]
     #override default layout by the fixed bootstrap
@@ -35,8 +35,13 @@ class UsersController < ApplicationController
 
         respond_to do |format|
             if @user.save
-                format.html { redirect_to @user, notice: 'User was successfully created.' }
-                format.json { render :show, status: :created, location: @user }
+                if @user.is_admin == true
+                    format.html { redirect_to @user, notice: 'User was successfully created.' }
+                    format.json { render :show, status: :created, location: @user }
+                else
+                    format.html { redirect_to log_in_path, notice: 'Your account was successfully created. You can now login.' }
+                    format.json { render :show, status: :created, location: @user }
+                end
             else
                 format.html { render :new }
                 format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -77,7 +82,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-        params.require(:user).permit(:username, :email, :password, :password_confirmation, :is_admin, :is_active, :is_blocked)
+        params.require(:user).permit(:username, :email, :password, :password_confirmation, :is_admin, :is_active)
     end
 
     def account_settings
