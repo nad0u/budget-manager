@@ -55,9 +55,19 @@
 new_budget_path,
 :class => 'btn btn-primary' %>
 
+<% if @budgets.count == 0 %>
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="alert fade in alert-info">No data available. Add your expenses now.</div>
+    </div>
+</div>
+<% else %>
 <%= pie_chart current_user.budgets.joins(:category).where('extract(month from date_of_budget) = ?', 12).group(:is_expense).sum(:amount), library: { pieSliceText: 'value' } %>
 <%= column_chart current_user.budgets.joins(:category).where('is_expense = true AND extract(month from date_of_budget) = ?', 12).group("is_expense, categories.name").sum(:amount) %>
 <%= column_chart current_user.budgets.where('is_expense = true').group_by_month(:date_of_budget).sum(:amount) %>
+<%= column_chart current_user.budgets.group(:is_expense).group_by_month(:date_of_budget).sum(:amount) %>
 <%= column_chart current_user.budgets.where('is_expense = true').group(:date_of_budget).sum(:amount) %>
 
 <%= bar_chart Budget.where('extract(month from date_of_budget) = ?', 10).group(:is_expense).sum(:amount) %>
+
+<% end %>
