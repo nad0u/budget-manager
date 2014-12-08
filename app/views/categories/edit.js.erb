@@ -1,2 +1,5 @@
 $('#category-form').html("<%= j (render 'form') %>");
 $('#category-form').slideDown(350);
+$('#cancel').click(function(){
+    $('#category-form').slideUp(350);
+});
