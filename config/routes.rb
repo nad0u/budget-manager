@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :budgets
 
-  resources :categories
+  resources :categories, :except => :show
 
   resources :users
 
