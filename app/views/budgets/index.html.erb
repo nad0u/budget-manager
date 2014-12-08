@@ -3,7 +3,10 @@
 
 <div class="page-header">
     <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+    <%= link_to t('.new', :default => t("helpers.links.new")), new_budget_path, remote: true, :class => 'btn btn-primary' %>
 </div>
+
+<div id="budget-form" style="display:none;"></div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -15,45 +18,10 @@
             <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
     </thead>
-    <tbody>
-        <% @budgets.each do |budget| %>
-        <tr>
-            <td><%= budget.date_of_budget.strftime("%d.%m.%Y") %></td>
-            <td class="
-            <%=
-            if budget.is_expense
-                "text-danger text-right"
-            else
-                "text-success text-right"
-            end %>
-            "><%= number_with_precision( budget.amount, precision: 2, separator: '.', delimiter: '\'') %></td>
-            <td><%= link_to budget.name, budget_path(budget) %></td>
-            <td><%= budget.description %></td>
-            <td><%=
-            if budget.category_id.nil?
-                "-"
-            else
-                budget.category.name
-            end
-            %></td>
-            <td>
-                <%= link_to glyph(:edit, {:tag => :span}),
-                edit_budget_path(budget),
-                :class => 'btn btn-primary' %>
-                <%= link_to glyph(:trash, {:tag => :span}),
-                budget_path(budget),
-                :method => :delete,
-                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                :class => 'btn btn-danger' %>
-            </td>
-        </tr>
-        <% end %>
+    <tbody id="budgets">
+        <%= render @budgets %>
     </tbody>
 </table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),
-new_budget_path,
-:class => 'btn btn-primary' %>
 
 <% if @budgets.count == 0 %>
 <div class="row">
@@ -68,6 +36,6 @@ new_budget_path,
 <%= column_chart current_user.budgets.group(:is_expense).group_by_month(:date_of_budget).sum(:amount) %>
 <%= column_chart current_user.budgets.where('is_expense = true').group(:date_of_budget).sum(:amount) %>
 
-<%= bar_chart Budget.where('extract(month from date_of_budget) = ?', 10).group(:is_expense).sum(:amount) %>
+<%= bar_chart Budget.where('extract(month from date_of_budget) = ?', 12).group(:is_expense).sum(:amount) %>
 
 <% end %>
