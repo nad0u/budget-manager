@@ -82,12 +82,4 @@ class UsersController < ApplicationController
                 redirect_to(root_url)
             end
         end
-
-end
-    end
-
-    def login
-    @user = User.koala(request.env['omniauth.auth']['credentials'])
-    end
-	
 end
