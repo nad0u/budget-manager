@@ -1,7 +1,6 @@
 <%- model_class = Budget -%>
 <%
 if @mydate.blank?
-    #@mydate = 12
     @mydate_m = Time.now.strftime("%m")
     @mydate_y = Time.now.strftime("%Y")
 else
@@ -24,6 +23,7 @@ else
 </div>
 <% end %>
 <script type="text/javascript">
+//This will display only the month and the year
 $(function() {
     $('.date-picker-my').datepicker( {
         changeMonth: true,
@@ -63,7 +63,6 @@ $(function() {
         title: 'Expenses and savings for the past 5 years',
         hAxis: { title: 'Year' }
         } %>
-
 
 <!-- month details -->
 <% else %>
