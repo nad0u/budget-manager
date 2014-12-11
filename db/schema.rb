@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141121124748) do
+ActiveRecord::Schema.define(version: 20141206222119) do
 
   create_table "budgets", force: true do |t|
     t.string   "name"
@@ -21,7 +21,8 @@ ActiveRecord::Schema.define(version: 20141121124748) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "amount",      limit: 24
+    t.decimal  "amount",         precision: 10, scale: 0
+    t.date     "date_of_budget",                          default: '2014-12-03'
   end
 
   add_index "budgets", ["category_id"], name: "index_budgets_on_category_id", using: :btree
@@ -38,13 +39,14 @@ ActiveRecord::Schema.define(version: 20141121124748) do
     t.string   "username"
     t.string   "email"
     t.string   "password_hash"
-    t.string   "password_salt"
     t.boolean  "is_active"
-    t.boolean  "is_blocked"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_admin",      default: false
+    t.string   "password_salt"
   end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
   add_foreign_key "budgets", "categories", name: "budgets_category_id_fk"
   add_foreign_key "budgets", "users", name: "budgets_user_id_fk"

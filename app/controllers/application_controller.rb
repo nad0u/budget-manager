@@ -1,6 +1,39 @@
 class ApplicationController < ActionController::Base
-  def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  end
-  helper_method :current_user
+    protect_from_forgery
+    helper_method :current_user, :logged_in?, :admin?
+
+    def current_user
+        # Note: we want to use "find_by_id" because it's OK to return a nil.
+        # If we were to use User.find, it would throw an exception if the user can't be found.
+        @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
+    end
+
+
+    #user must be logged in and admin to access certain resources
+    def check_authorization
+        if logged_in?
+            #raise User::NotAuthorized unless current_user.is_admin == true
+            if current_user.is_admin == false
+                #flash[:error] = "You don't have access to this section."
+                redirect_to(root_url)
+            end
+        else
+            redirect_to(root_url)
+        end
+    end
+
+    def logged_in?
+        current_user != nil
+    end
+
+    def admin?
+        current_user.is_admin == true
+    end
+
+    def require_login
+        unless logged_in?
+            flash[:error] = "You must be logged in to access this section"
+            redirect_to log_in_url
+        end
+    end
 end

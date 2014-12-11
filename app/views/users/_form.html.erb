@@ -15,58 +15,63 @@
 </div>
 <% end %>
 
-<div class="control-group">
-    <%= f.label :username, :class => 'control-label' %>
-    <div class="controls">
+<div class="form-group">
+    <%= f.label :username, :class => 'col-sm-2 control-label' %>
+    <div class="col-sm-3">
         <%= f.text_field :username, :class => 'form-control' %>
     </div>
     <%= error_span(@user[:username]) %>
 </div>
-<div class="control-group">
-    <%= f.label :email, :class => 'control-label' %>
-    <div class="controls">
+<div class="form-group">
+    <%= f.label :email, :class => 'col-sm-2 control-label' %>
+    <div class="col-sm-3">
         <%= f.text_field :email, :class => 'form-control' %>
     </div>
     <%= error_span(@user[:email]) %>
 </div>
-<div class="control-group">
-    <%= f.label :password, :class => 'control-label' %>
-    <div class="controls">
+<div class="form-group">
+    <%= f.label :password, :class => 'col-sm-2 control-label' %>
+    <div class="col-sm-3">
         <%= f.password_field :password, :class => 'form-control' %>
     </div>
     <%= error_span(@user[:password]) %>
 </div>
-<div class="control-group">
-    <%= f.label :password_confirmation, :class => 'control-label' %>
-    <div class="controls">
+<div class="form-group">
+    <%= f.label :password_confirmation, :class => 'col-sm-2 control-label' %>
+    <div class="col-sm-3">
         <%= f.password_field :password_confirmation, :class => 'form-control' %>
     </div>
     <%= error_span(@user[:password_confirmation]) %>
 </div>
-<div class="control-group">
-    <%= f.label :is_active, :class => 'control-label' %>
-    <div class="controls">
+<% if logged_in? and admin? %>
+<div class="form-group">
+    <%= f.label :is_active, :class => 'col-sm-2 control-label' %>
+    <div class="col-sm-3">
         <%= f.check_box :is_active, :class => 'form-control' %>
     </div>
     <%= error_span(@user[:is_active]) %>
 </div>
-<div class="control-group">
-    <%= f.label :is_blocked, :class => 'control-label' %>
-    <div class="controls">
-        <%= f.check_box :is_blocked, :class => 'form-control' %>
-    </div>
-    <%= error_span(@user[:is_blocked]) %>
-</div>
-<div class="control-group">
-    <%= f.label :is_admin, :class => 'control-label' %>
-    <div class="controls">
+<div class="form-group">
+    <%= f.label :is_admin, :class => 'col-sm-2 control-label' %>
+    <div class="col-sm-3">
         <%= f.check_box :is_admin, :class => 'form-control' %>
     </div>
     <%= error_span(@user[:is_admin]) %>
 </div>
-
-<%= f.submit nil, :class => 'btn btn-primary' %>
-<%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-users_path, :class => 'btn btn-default' %>
-
+<% end %>
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-5">
+        <%= f.submit "Create", :class => 'btn btn-primary' %>
+        <% if logged_in? and admin? %>
+            <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            users_path, :class => 'btn btn-default' %>
+        <% elsif logged_in? and admin? == false %>
+            <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            users_path(@user), :class => 'btn btn-default' %>
+        <% else %>
+            <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            root_path, :class => 'btn btn-default' %>
+        <% end %>
+    </div>
+</div>
 <% end %>
