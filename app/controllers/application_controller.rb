@@ -12,9 +12,7 @@ class ApplicationController < ActionController::Base
     #user must be logged in and admin to access certain resources
     def check_authorization
         if logged_in?
-            #raise User::NotAuthorized unless current_user.is_admin == true
             if current_user.is_admin == false
-                #flash[:error] = "You don't have access to this section."
                 redirect_to(root_url)
             end
         else

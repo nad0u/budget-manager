@@ -34,7 +34,6 @@ class UsersController < ApplicationController
     # POST /users.json
     def create
         @user = User.new(user_params)
-        #@user.save
 
         if @user.save
             if current_user.nil?
@@ -42,55 +41,18 @@ class UsersController < ApplicationController
                 redirect_to log_in_path
             end
         end
-
-        # respond_to do |format|
-        #     if @user.save
-        #         if admin? == false
-        #             format.html { redirect_to log_in_path, notice: 'Your account was successfully created. You can now login.' }
-        #         end
-        #     end
-        # end
-
-        # respond_to do |format|
-        #     if @user.save
-        #         if @user.is_admin == true
-        #             format.html { redirect_to @user, notice: 'User was successfully created.' }
-        #             format.json { render :show, status: :created, location: @user }
-        #         else
-        #             format.html { redirect_to log_in_path, notice: 'Your account was successfully created. You can now login.' }
-        #             format.json { render :show, status: :created, location: @user }
-        #         end
-        #     else
-        #         format.html { render :new }
-        #         format.json { render json: @user.errors, status: :unprocessable_entity }
-        #     end
-        # end
     end
 
     # PATCH/PUT /users/1
     # PATCH/PUT /users/1.json
     def update
         @user.update(user_params)
-
-        # respond_to do |format|
-        #     if @user.update(user_params)
-        #         format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        #         format.json { render :show, status: :ok, location: @user }
-        #     else
-        #         format.html { render :edit }
-        #         format.json { render json: @user.errors, status: :unprocessable_entity }
-        #     end
-        # end
     end
 
     # DELETE /users/1
     # DELETE /users/1.json
     def destroy
         @user.destroy
-        # respond_to do |format|
-        #     format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-        #     format.json { head :no_content }
-        # end
     end
 
     def delete
@@ -117,7 +79,6 @@ class UsersController < ApplicationController
 
         def check_user
             if current_user != @user
-                #flash[:error] = "You don't have access to this section."
                 redirect_to(root_url)
             end
         end
