@@ -8,10 +8,13 @@
     <dd><%= @user.username %></dd>
     <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
     <dd><%= @user.email %></dd>
+
+<% if admin? %>
     <dt><strong><%= model_class.human_attribute_name(:is_active) %>:</strong></dt>
     <dd><%= @user.is_active %></dd>
     <dt><strong><%= model_class.human_attribute_name(:is_admin) %>:</strong></dt>
     <dd><%= @user.is_admin %></dd>
+<% end %>
     <dt><strong><%= model_class.human_attribute_name(:created_at) %>:</strong></dt>
     <dd><%= @user.created_at %></dd>
     <dt><strong><%= model_class.human_attribute_name(:updated_at) %>:</strong></dt>
