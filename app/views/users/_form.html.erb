@@ -1,4 +1,5 @@
-<%= form_for @user, :html => { :class => "form-horizontal user" } do |f| %>
+<% #when creating an account, the form should not use remote:true %>
+<%= form_for @user, remote: !current_user.nil?, :html => { :class => "form-horizontal user" } do |f| %>
 
 <% if @user.errors.any? %>
 <div id="error_expl" class="panel panel-danger">
@@ -64,13 +65,13 @@
         <%= f.submit "Create", :class => 'btn btn-primary' %>
         <% if logged_in? and admin? %>
             <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-            users_path, :class => 'btn btn-default' %>
+            users_path, :class => 'btn btn-default', :id => 'cancel' %>
         <% elsif logged_in? and admin? == false %>
             <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-            users_path(@user), :class => 'btn btn-default' %>
+            users_path(@user), :class => 'btn btn-default', :id => 'cancel' %>
         <% else %>
             <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-            root_path, :class => 'btn btn-default' %>
+            root_path, :class => 'btn btn-default', :id => 'cancel' %>
         <% end %>
     </div>
 </div>

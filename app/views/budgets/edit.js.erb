@@ -1,0 +1,5 @@
+$('#budget-form').html("<%= j (render 'form') %>");
+$('#budget-form').slideDown(350);
+$('#cancel').click(function(){
+    $('#budget-form').slideUp(350);
+});

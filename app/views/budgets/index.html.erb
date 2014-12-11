@@ -1,9 +1,11 @@
-
 <%- model_class = Budget -%>
 
 <div class="page-header">
     <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+    <%= link_to t('.new', :default => t("helpers.links.new")), new_budget_path, remote: true, :class => 'btn btn-primary' %>
 </div>
+
+<div id="budget-form" style="display:none;"></div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -15,59 +17,33 @@
             <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
     </thead>
-    <tbody>
-        <% @budgets.each do |budget| %>
-        <tr>
-            <td><%= budget.date_of_budget.strftime("%d.%m.%Y") %></td>
-            <td class="
-            <%=
-            if budget.is_expense
-                "text-danger text-right"
-            else
-                "text-success text-right"
-            end %>
-            "><%= number_with_precision( budget.amount, precision: 2, separator: '.', delimiter: '\'') %></td>
-            <td><%= link_to budget.name, budget_path(budget) %></td>
-            <td><%= budget.description %></td>
-            <td><%=
-            if budget.category_id.nil?
-                "-"
-            else
-                budget.category.name
-            end
-            %></td>
-            <td>
-                <%= link_to glyph(:edit, {:tag => :span}),
-                edit_budget_path(budget),
-                :class => 'btn btn-primary' %>
-                <%= link_to glyph(:trash, {:tag => :span}),
-                budget_path(budget),
-                :method => :delete,
-                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                :class => 'btn btn-danger' %>
-            </td>
-        </tr>
-        <% end %>
+    <tbody id="budgets">
+        <%= render @budgets %>
     </tbody>
 </table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),
-new_budget_path,
-:class => 'btn btn-primary' %>
 
 <% if @budgets.count == 0 %>
 <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
-        <div class="alert fade in alert-info">No data available. Add your expenses now.</div>
+        <div class="alert fade in alert-info">No data available. Add your expenses and savings now.</div>
     </div>
 </div>
-<% else %>
-<%= pie_chart current_user.budgets.joins(:category).where('extract(month from date_of_budget) = ?', 12).group(:is_expense).sum(:amount), library: { pieSliceText: 'value' } %>
-<%= column_chart current_user.budgets.joins(:category).where('is_expense = true AND extract(month from date_of_budget) = ?', 12).group("is_expense, categories.name").sum(:amount) %>
-<%= column_chart current_user.budgets.where('is_expense = true').group_by_month(:date_of_budget).sum(:amount) %>
-<%= column_chart current_user.budgets.group(:is_expense).group_by_month(:date_of_budget).sum(:amount) %>
-<%= column_chart current_user.budgets.where('is_expense = true').group(:date_of_budget).sum(:amount) %>
 
-<%= bar_chart Budget.where('extract(month from date_of_budget) = ?', 10).group(:is_expense).sum(:amount) %>
+<% else %>
+
+<div class="row"><p></p></div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="btn-group" role="group" aria-label="Chart Type">
+            <%= link_to "Month details", "/load/4", remote: true, :class => 'chart_type btn btn-default', data: { cid: "4" } %>
+            <%= link_to "By year", "/load/3", remote: true, :class => 'chart_type btn btn-default', data: { cid: "3" } %>
+            <%= link_to "By month", "/load/1", remote: true, :class => 'chart_type btn btn-default', data: { cid: "1" } %>
+            <%= link_to "By day", "/load/2", remote: true, :class => 'chart_type btn btn-default', data: { cid: "2" } %>
+        </div>
+    </div>
+</div>
+<p>
+    <div id="chart"><%= render 'chart', custom_chart: 4 %></div>
+</p>
 
 <% end %>

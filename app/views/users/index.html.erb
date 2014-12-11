@@ -1,39 +1,23 @@
 <%- model_class = User -%>
+
 <div class="page-header">
     <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+    <%= link_to t('.new', :default => t("helpers.links.new")), new_user_path, remote: true, :class => 'btn btn-primary' %>
 </div>
+
+<div id="user-form" style="display:none;"></div>
 <table class="table table-striped">
     <thead>
         <tr>
-            <th><%= model_class.human_attribute_name(:id) %></th>
             <th><%= model_class.human_attribute_name(:username) %></th>
             <th><%= model_class.human_attribute_name(:is_active) %></th>
-            <th><%= model_class.human_attribute_name(:is_blocked) %></th>
             <th><%= model_class.human_attribute_name(:created_at) %></th>
             <th><%= model_class.human_attribute_name(:updated_at) %></th>
             <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
     </thead>
-    <tbody>
-        <% @users.each do |user| %>
-        <tr>
-            <td><%= link_to user.id %></td>
-            <td><%= link_to user.username, user_path(user) %></td>
-            <td><%= user.is_active %></td>
-            <td><%= user.is_blocked %></td>
-            <td><%= user.created_at %></td>
-            <td><%= user.created_at %></td>
-            <td>
-                <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                edit_user_path(user), :class => 'btn btn-default btn-xs' %>
-                <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                user_path(user),
-                :method => :delete,
-                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                :class => 'btn btn-xs btn-danger' %>
-            </td>
-        </tr>
-        <% end %>
+    <tbody id="users">
+        <%= render @users %>
     </tbody>
 </table>
 

@@ -1,19 +1,25 @@
 class BudgetsController < ApplicationController
-    before_action :require_login, only: [:index, :show, :new, :edit, :create, :update, :destroy]
-    before_action :set_budget, only: [:show, :edit, :update, :destroy]
+    before_action :require_login, only: [:index, :show, :new, :edit, :create, :update, :delete, :destroy]
+    before_action :set_budget, only: [:show, :edit, :update, :delete, :destroy]
+    before_action :all_budgets, only: [:index, :create, :update, :delete, :destroy, :test]
+    respond_to :html, :js, :json
     #override default layout by the fixed bootstrap
     layout "fixed"
+
+    # GET /load_chart/1
+    def load_chart
+        @cid = params[:cid]
+    end
+
+    # POST /up
+    def update_chart
+        @mydate = params[:date]
+        @chart_type = params[:chart_type]
+    end
 
     # GET /budgets
     # GET /budgets.json
     def index
-        # if admin?
-        #     @budgets = Budget.all
-        # else
-        #     @budgets = current_user.budgets
-        # end
-        # user can only see the list of budgets that belongs to him
-        @budgets = current_user.budgets
     end
 
     # GET /budgets/1
@@ -26,14 +32,12 @@ class BudgetsController < ApplicationController
     def new
         @budget = Budget.new
         @categories = Category.all
-        #@users = User.all
     end
 
     # GET /budgets/1/edit
     def edit
         check_user
         @categories = Category.all
-        #@users = User.all
     end
 
     # POST /budgets
@@ -41,60 +45,44 @@ class BudgetsController < ApplicationController
     def create
         @budget = Budget.new(budget_params)
         @budget.user_id = current_user.id
-
-        respond_to do |format|
-            if @budget.save
-                format.html { redirect_to @budget, notice: 'Budget was successfully created.' }
-                format.json { render :show, status: :created, location: @budget }
-            else
-                format.html { render :new }
-                format.json { render json: @budget.errors, status: :unprocessable_entity }
-            end
-        end
+        @budget.save
     end
 
     # PATCH/PUT /budgets/1
     # PATCH/PUT /budgets/1.json
     def update
         @categories = Category.all
-        #@users = User.all
-        respond_to do |format|
-            if @budget.update(budget_params)
-                format.html { redirect_to @budget, notice: 'Budget was successfully updated.' }
-                format.json { render :show, status: :ok, location: @budget }
-            else
-                format.html { render :edit }
-                format.json { render json: @budget.errors, status: :unprocessable_entity }
-            end
-        end
+        @budget.update(budget_params)
+    end
+
+    def delete
     end
 
     # DELETE /budgets/1
     # DELETE /budgets/1.json
     def destroy
         @budget.destroy
-        respond_to do |format|
-            format.html { redirect_to budgets_url, notice: 'Budget was successfully destroyed.' }
-            format.json { head :no_content }
-        end
     end
 
     private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_budget
-        @budget = Budget.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def budget_params
-        params.require(:budget).permit(:name, :description, :is_expense, :category_id, :amount, :date_of_budget)
-    end
-
-    #users can only see their own budget
-    def check_user
-        if current_user != @budget.user
-            #flash[:error] = "You don't have access to this section."
-            redirect_to(root_url)
+        # Use callbacks to share common setup or constraints between actions.
+        def set_budget
+            @budget = Budget.find(params[:id])
         end
-    end
+
+        def all_budgets
+            @budgets = current_user.budgets
+        end
+
+        # Never trust parameters from the scary internet, only allow the white list through.
+        def budget_params
+            params.require(:budget).permit(:name, :description, :is_expense, :category_id, :amount, :date_of_budget)
+        end
+
+        #users can only see their own budget
+        def check_user
+            if current_user != @budget.user
+                redirect_to(root_url)
+            end
+        end
 end

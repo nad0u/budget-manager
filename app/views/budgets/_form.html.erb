@@ -1,4 +1,4 @@
-<%= form_for @budget, :html => { :class => "form-horizontal budget" } do |f| %>
+<%= form_for @budget, remote: true, :html => { :class => "form-horizontal budget" } do |f| %>
 
 <script>
 $(function() {
@@ -68,9 +68,9 @@ $(function() {
 
 <div class="form-group">
     <div class="col-sm-offset-2 col-sm-5">
-    <%= f.submit "Create", :class => 'btn btn-primary' %>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-    budgets_path, :class => 'btn btn-default' %>
+    budgets_path, :class => 'btn btn-default', :id => 'cancel' %>
     </div>
 </div>
 

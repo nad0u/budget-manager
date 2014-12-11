@@ -1,33 +1,18 @@
 Rails.application.routes.draw do
 
-  get 'charts/completed_tasks'
-
-  get 'chart/index'
-
-  #get 'sessions/new'
-
-  #get 'sessions/create'
-
-  #get 'sessions/destroy'
-
   resources :budgets
 
-  resources :categories
+  resources :categories, :except => :show
 
   resources :users
 
-  resources :about
-
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
   root 'welcome#index'
   get "/log-in" => "sessions#new"
   post "/log-in" => "sessions#create"
   get "/log-out" => "sessions#destroy", as: :log_out
   get "account_settings" => "users#account_settings"
   put "account_settings" => "users#update"
+<<<<<<< HEAD
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
@@ -80,4 +65,8 @@ Rails.application.routes.draw do
   get 'auth/facebook', as: "auth_provider"
   get 'auth/facebook/callback', to: 'users#login'
   
+=======
+  post "/up" => "budgets#update_chart"
+  get "/load/:cid" => "budgets#load_chart"
+>>>>>>> develop_local
 end
