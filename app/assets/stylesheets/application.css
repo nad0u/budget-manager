@@ -24,6 +24,7 @@
      src: url('/assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/assets/glyphicons-halflings-regular.woff') format('woff'), url('/assets/glyphicons-halflings-regular.ttf') format('truetype'), url('/assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
  }
 
+/*
 .nav a {
     color: #cc0000;
     font-size: 14px;
@@ -34,7 +35,6 @@
     margin-top: 15px;
 }
 
-/*
 .navbar-inverse {
     background-color: #89c140;
     border-color: #89c140;

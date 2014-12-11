@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   get "/log-out" => "sessions#destroy", as: :log_out
   get "account_settings" => "users#account_settings"
   put "account_settings" => "users#update"
+  post "/up" => "budgets#update_chart"
+  get "/load/:cid" => "budgets#load_chart"
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

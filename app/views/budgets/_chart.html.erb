@@ -1,0 +1,81 @@
+<%- model_class = Budget -%>
+<%
+if @mydate.blank?
+    #@mydate = 12
+    @mydate_m = Time.now.strftime("%m")
+    @mydate_y = Time.now.strftime("%Y")
+else
+    @mydate_m = Date.parse(@mydate).strftime("%m")
+    @mydate_y = Date.parse(@mydate).strftime("%Y")
+%>
+<% end %>
+
+
+<%= form_tag("/up", { :class => "form-horizontal chart-date", :id => "form-my", remote: true }) do %>
+<div class="form-group">
+    <%= label_tag(:date, nil, {:class => 'col-sm-2 control-label'}) %>
+    <div class="col-sm-3">
+        <%= text_field_tag(:date, nil, {:class => 'form-control date-picker-my'}) %>
+        <%= hidden_field_tag 'chart_type', custom_chart %>
+    </div>
+    <div class="col-sm-2">
+        <%= submit_tag("Update", {:class => 'btn btn-primary'}) %>
+    </div>
+</div>
+<% end %>
+<script type="text/javascript">
+$(function() {
+    $('.date-picker-my').datepicker( {
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: false,
+        dateFormat: 'MM yy',
+        onClose: function(dateText, inst) {
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(year, month, 1));
+        }
+    });
+    $('.date-picker-my').click(function(){
+        $('.ui-datepicker-calendar').css("display", "none");
+    });
+});
+</script>
+
+<!-- by month -->
+<% if custom_chart == 1 %>
+    <%= column_chart current_user.budgets.where('extract(year from date_of_budget) = ?', @mydate_y).group("CASE WHEN is_expense = true THEN 'Expense' ELSE 'Saving' END").group_by_month(:date_of_budget, format: "%b %Y").sum(:amount), library: { colors: ['green', '#dc3912'] } %>
+
+<!-- by day -->
+<% elsif custom_chart == 2 %>
+    <%= column_chart current_user.budgets.where('extract(year from date_of_budget) = ? AND extract(month from date_of_budget) = ?', @mydate_y, @mydate_m).group("CASE WHEN is_expense = true THEN 'Expense' ELSE 'Saving' END").group_by_day(:date_of_budget, format: "%-d").sum(:amount),
+    library: {
+        colors: ['#dc3912', 'green'],
+        title: 'Expenses and savings for the selected month',
+        hAxis: { title: 'Day' }
+        } %>
+
+<!-- by year -->
+<% elsif custom_chart == 3 %>
+    <%= column_chart current_user.budgets.group("CASE WHEN is_expense = true THEN 'Expense' ELSE 'Saving' END").group_by_year(:date_of_budget, format: "%Y", last: 5).sum(:amount),
+    library: {
+        colors: ['green', '#dc3912'],
+        title: 'Expenses and savings for the past 5 years',
+        hAxis: { title: 'Year' }
+        } %>
+
+
+<!-- month details -->
+<% else %>
+    <%= pie_chart current_user.budgets.where('extract(year from date_of_budget) = ? AND extract(month from date_of_budget) = ?', @mydate_y, @mydate_m).group("CASE WHEN is_expense = true THEN 'Expense' ELSE 'Saving' END").sum(:amount),
+    library: {
+        pieSliceText: 'value',
+        colors: ['green', '#dc3912'],
+        title: 'Expenses and savings for the selected month'
+        } %>
+    <%= pie_chart current_user.budgets.joins(:category).where('extract(year from date_of_budget) = ? AND extract(month from date_of_budget) = ?', @mydate_y, @mydate_m).group("categories.name").sum(:amount),
+    library: {
+        pieSliceText: 'value',
+        title: 'Expenses and savings for the selected month by category'
+        } %>
+<% end %>

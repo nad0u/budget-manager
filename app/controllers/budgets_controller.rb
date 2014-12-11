@@ -1,10 +1,24 @@
 class BudgetsController < ApplicationController
     before_action :require_login, only: [:index, :show, :new, :edit, :create, :update, :delete, :destroy]
     before_action :set_budget, only: [:show, :edit, :update, :delete, :destroy]
-    before_action :all_budgets, only: [:index, :create, :update, :delete, :destroy]
-    respond_to :html, :js
+    before_action :all_budgets, only: [:index, :create, :update, :delete, :destroy, :test]
+    respond_to :html, :js, :json
     #override default layout by the fixed bootstrap
     layout "fixed"
+
+    # GET /load_chart/1
+    def load_chart
+        @cid = params[:cid]
+    end
+
+    # POST /up
+    def update_chart
+        @mydate = params[:date]
+        @chart_type = params[:chart_type]
+        # respond_to do |format|
+        #     format.html { render partial: "chart" }
+        # end
+    end
 
     # GET /budgets
     # GET /budgets.json

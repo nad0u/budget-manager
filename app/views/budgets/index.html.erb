@@ -25,16 +25,27 @@
 <% if @budgets.count == 0 %>
 <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
-        <div class="alert fade in alert-info">No data available. Add your expenses now.</div>
+        <div class="alert fade in alert-info">No data available. Add your expenses and savings now.</div>
     </div>
 </div>
-<% else %>
-<%= pie_chart current_user.budgets.joins(:category).where('extract(month from date_of_budget) = ?', 12).group(:is_expense).sum(:amount), library: { pieSliceText: 'value' } %>
-<%= column_chart current_user.budgets.joins(:category).where('is_expense = true AND extract(month from date_of_budget) = ?', 12).group("is_expense, categories.name").sum(:amount) %>
-<%= column_chart current_user.budgets.where('is_expense = true').group_by_month(:date_of_budget).sum(:amount) %>
-<%= column_chart current_user.budgets.group(:is_expense).group_by_month(:date_of_budget).sum(:amount) %>
-<%= column_chart current_user.budgets.where('is_expense = true').group(:date_of_budget).sum(:amount) %>
 
-<%= bar_chart Budget.where('extract(month from date_of_budget) = ?', 12).group(:is_expense).sum(:amount) %>
+<% else %>
+
+<div class="row"><p></p></div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="btn-group" role="group" aria-label="Chart Type">
+            <%= link_to "Month details", "/load/4", remote: true, :class => 'chart_type btn btn-default', data: { cid: "4" } %>
+            <%= link_to "By year", "/load/3", remote: true, :class => 'chart_type btn btn-default', data: { cid: "3" } %>
+            <%= link_to "By month", "/load/1", remote: true, :class => 'chart_type btn btn-default', data: { cid: "1" } %>
+            <%= link_to "By day", "/load/2", remote: true, :class => 'chart_type btn btn-default', data: { cid: "2" } %>
+        </div>
+    </div>
+</div>
+<p>
+    <div id="chart"><%= render 'chart', custom_chart: 4 %></div>
+</p>
+
+
 
 <% end %>
