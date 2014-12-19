@@ -16,7 +16,7 @@
 /tmp
 
 # Ignore db config
-config/database.yml
+#config/database.yml
 
 # Ignore .DS_Store
 .DS_Store
